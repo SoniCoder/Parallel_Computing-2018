@@ -6,9 +6,9 @@
 int main(int argc, char * argv[])
 {
 	int s=0;
+	MPI_Init(&argc,&argv);
 	while(s<3)
 	{
-		MPI_Init(&argc,&argv);
 		int rank, size,parent=0;
 		int n;
 		MPI_Comm_rank(MPI_COMM_WORLD,&rank);
@@ -20,11 +20,11 @@ int main(int argc, char * argv[])
 			//fflush(stdout);//Otherwise waits indefinitely.
 			//scanf("%d",&n);//Take input from the parent only.
 			n = (2*rand()/3)*rand();
+			printf("The n is %d.\n",n);
 		}
 		MPI_Barrier(MPI_COMM_WORLD);//Synchronizing point
 		double Time = -MPI_Wtime();
 		MPI_Bcast(&n, 1, MPI_INT, 0, MPI_COMM_WORLD);
-		//printf("The n is %d.\n",n);
 		int rootn2 = sqrt(n); // floor(sqrt(n))
 		//Computing the primes in range(2,sqrt(n)), both inclusive.
 		//Two Approaches :  
@@ -93,8 +93,8 @@ int main(int argc, char * argv[])
 		Time += MPI_Wtime();
 		if(rank==parent)
 			printf("Number of primes below %d is %d : Done in %10.6fs \n",n,countAll+count,Time);
-		MPI_Finalize();
 		s++;
 	}
+	MPI_Finalize();
 	return 0;
 }
