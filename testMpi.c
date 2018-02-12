@@ -19,7 +19,8 @@ int main(int argc, char * argv[])
 			//printf("Enter the n : ");
 			//fflush(stdout);//Otherwise waits indefinitely.
 			//scanf("%d",&n);//Take input from the parent only.
-			n = (2*rand()/3)*rand();
+			//n = (2*rand()/3)*rand();
+			n = 10000000;
 			printf("The n is %d.\n",n);
 		}
 		MPI_Barrier(MPI_COMM_WORLD);//Synchronizing point
