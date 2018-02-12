@@ -9,7 +9,7 @@
 using namespace std;
 
 int main(int argc, char * argv[]){
-	srand(static_cast <unsigned int> (time(0)));
+	srand(static_cast <unsigned int> (time(0)));//Initialize Pseudo-Random Seed
 
 	ios::sync_with_stdio(false);//For faster IO
 
@@ -46,8 +46,12 @@ int main(int argc, char * argv[]){
 	ofstream out;
 
 	for(int cur_doc=0; cur_doc < docn; ++cur_doc){
-		out.open("doc-"+cur_doc);
-		out << "Testing\n" << endl;
+		out.open("doc-"+to_string(cur_doc));
+		for(int w_i=0; w_i<docwlen; ++w_i){
+			int w_index = rand() % wlslen;
+			out << wlist[w_index] << " ";
+		}
+		out << endl;
 		out.close();
 	}
 
