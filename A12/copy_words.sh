@@ -1,6 +1,6 @@
 #!/bin/bash
 
-users=$(cat users)
+users=$(cat host_file)
 
 for user in $users
 do
