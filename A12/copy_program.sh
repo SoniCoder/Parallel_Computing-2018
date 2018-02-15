@@ -6,5 +6,7 @@ for user in $users
 do
 	scp wordlist $user:~/
 	scp stopwords $user:~/
+	scp docMaker $user:~/
+	scp indexer $user:~/
 done
 
