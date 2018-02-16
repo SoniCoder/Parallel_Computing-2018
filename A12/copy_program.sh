@@ -8,5 +8,6 @@ do
 	scp stopwords $user:~/
 	scp docMaker $user:~/
 	scp indexer $user:~/
+	scp indexMerger $user:~/
 done
 

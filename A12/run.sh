@@ -20,3 +20,4 @@ done
 
 mpirun -np 2 -host $hosts docMaker
 mpirun -np 2 -host $hosts indexer
+mpirun -np 2 -host $hosts indexMerger
