@@ -46,7 +46,6 @@ int main(int argc, char * argv[])
 				count++;
 			}
 		}
-	
 		//Propagating this sieve across all the processors
 		//Initialization
 		int chunk_size = (n-rootn2)/size;
@@ -83,9 +82,10 @@ int main(int argc, char * argv[])
 					}
 			}
 			if(isNotPrime[u-left_index]==0)
+			{
 				count2++;
+			}
 		}
-
 		MPI_Barrier(MPI_COMM_WORLD);//Synchronizing point
 		int countAll=0;
 		//Collecting from all the processes.
