@@ -1,3 +1,4 @@
+#include <limits.h>
 #include <mpi.h>
 #include <math.h>
 #include <stdio.h>
@@ -7,10 +8,11 @@ int main(int argc, char * argv[])
 {
 	int s=0;
 	MPI_Init(&argc,&argv);
-	while(s<3)
+	int n = 100000;
+	while(s<4)
 	{
 		int rank, size,parent=0;
-		int n;
+		
 		MPI_Comm_rank(MPI_COMM_WORLD,&rank);
 		MPI_Comm_size(MPI_COMM_WORLD,&size);
 		//printf("Hi, my rank is %d in the peer-group of size %d.\n", rank,size);
@@ -19,7 +21,8 @@ int main(int argc, char * argv[])
 			//printf("Enter the n : ");
 			//fflush(stdout);//Otherwise waits indefinitely.
 			//scanf("%d",&n);//Take input from the parent only.
-			n = (2*rand()/3)*rand();
+			//n = 100000;
+			//n = 10000000;
 			printf("The n is %d.\n",n);
 		}
 		MPI_Barrier(MPI_COMM_WORLD);//Synchronizing point
@@ -93,6 +96,9 @@ int main(int argc, char * argv[])
 		Time += MPI_Wtime();
 		if(rank==parent)
 			printf("Number of primes below %d is %d : Done in %10.6fs \n",n,countAll+count,Time);
+		if(n<1000000000)
+			n*=10;
+		else n= INT_MAX;
 		s++;
 	}
 	MPI_Finalize();
