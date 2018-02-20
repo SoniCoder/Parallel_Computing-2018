@@ -23,7 +23,7 @@ int main(int argc, char * argv[]){
 
 	const int wlslen = 69903; //Known Wordlist Length
 	
-	const int docwlen = 10000; //Desired Document Word Length
+	const int docwlen = 100000; //Desired Document Word Length
         const int docn = 10; //Desired Number of Documents
 
 	string wlist[wlslen];//Store WordList on RAM	
