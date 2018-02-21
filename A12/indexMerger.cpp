@@ -19,21 +19,21 @@ int main(int argc, char * argv[]){
 	
 	cout << "Index Merger Started for Rank " << rank << endl;
 
-	char* buff = (char*)malloc(100000000);
+	char* buff = (char*)malloc(100000000); //Allocate Space for Receive Buffer
 
 	ios::sync_with_stdio(false);//For faster IO
 
 	
-	int steps = ceil(log2(size)); 
-	int gap = 1;
+	int steps = ceil(log2(size)); //Logarithmic Steps are requirement in our algorithm
+	int gap = 1; //Initially gap between receiver and sender is 1.. ex. P4's index is merged with P5 etc.
 	bool jobdone = false;
 	for(int step_i=0; step_i<steps; ++step_i){
 		cout << "Entering First Step of Merge on rank " << rank << endl;
-		int divisor = gap*2;
-		if (rank%divisor == 0 && !jobdone){
+		int divisor = gap*2; //Logic for checking who will be receiver and who will be sender
+		if (rank%divisor == 0 && !jobdone){ //Receiver
 			if (rank + gap < size){
 				rename("index", "index.old");
-				ifstream oldindex("index.old");
+				ifstream oldindex("index.old"); //Bring old index into memory
 				unordered_map<string, vector<tuple<int, int, int>>> index;
 				string indexline;
 				while(getline(oldindex, indexline)){
@@ -48,11 +48,11 @@ int main(int argc, char * argv[]){
 						index[word].push_back(make_tuple(freq, hisrank, doc));
 					}	
 				}
-				int incominSize;
+				int incominSize; //Get ready to receive incoming index
 				MPI_Recv(&incominSize, 1, MPI_INT, rank + gap, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 				MPI_Recv(buff, incominSize, MPI_CHAR, rank + gap, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
 				istringstream otherIndex(buff);
-				while(getline(otherIndex, indexline)){
+				while(getline(otherIndex, indexline)){ //Start merging the two indices
 					istringstream line(indexline);
 					string word;
 					line >> word;
@@ -73,7 +73,7 @@ int main(int argc, char * argv[]){
 						index[word] = res;								
 					}
 				}
-				ofstream out("index");
+				ofstream out("index"); //Write new indexer to file persistently
 				unordered_map<string, vector<tuple<int, int, int>>>::iterator it;
 				for(it = index.begin(); it!=index.end(); ++it){
 					vector<tuple<int, int, int>>& thisvec = it->second;
@@ -87,7 +87,7 @@ int main(int argc, char * argv[]){
 				}
 				out.close();
 				}	
-		}else if(!jobdone and rank - gap >= 0){
+		}else if(!jobdone and rank - gap >= 0){ //If sender send the persistent index file as is
 			ifstream index("index");
 			string indexstr((istreambuf_iterator<char>(index)), istreambuf_iterator<char>());	
 			int outSize = indexstr.size() + 1;
@@ -97,7 +97,7 @@ int main(int argc, char * argv[]){
 		}
 
 		MPI_Barrier(MPI_COMM_WORLD);//Synchronizing point
-		gap *= 2;
+		gap *= 2;//Next time gap between sender and receiver increases by factor of 2
 	}
 
 	cout << "Index Merger Finished for Rank " << rank << endl; 
