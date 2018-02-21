@@ -53,6 +53,10 @@ The n is 10000000.
 Number of primes below 10000000 is 664579 : Done in   0.741398s 
 The n is 100000000.
 Number of primes below 100000000 is 5761455 : Done in  16.288534s 
+The n is 1000000000.
+Number of primes below 1000000000 is 50847534 : Done in 375.493257s 
+The n is 2147483647.
+Number of primes below 2147483647 is 105097564 : Done in 1076.733008s
 
 p = 1
 
@@ -63,6 +67,8 @@ Number of primes below 1000000 is 78498 : Done in   0.073808s
 The n is 10000000.
 Number of primes below 10000000 is 664579 : Done in   1.455201s 
 The n is 100000000.
-Number of primes below 100000000 is 5761455 : Done in  32.145230s 
+Number of primes below 100000000 is 5761455 : Done in  32.145230s
+The n is 1000000000.
+Number of primes below 1000000000 is 50847534 : Done in 745.873284s 
 
 

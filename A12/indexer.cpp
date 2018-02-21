@@ -23,7 +23,7 @@ int main(int argc, char * argv[]){
         const int docn = 10; //Desired Number of Documents
 	const int slslen = 174; //Known Number of Available Stopwords
 
-	unordered_map<string, vector<tuple<int, int, int>>> index;
+	unordered_map<string, vector<tuple<int, int, int>>> index; //Store Local Index here
 
 	unordered_map<string, vector<tuple<int, int, int>>>::iterator it;
 
@@ -40,23 +40,23 @@ int main(int argc, char * argv[]){
 	for (int doc_i=0; doc_i<docn; ++doc_i){
 		ifstream document("doc-"+to_string(doc_i));
 		while(document >> s){
-			if (stopset.find(s)!=stopset.end()) continue;
+			if (stopset.find(s)!=stopset.end()) continue; //Don't add words in stopwords set
 			it = index.find(s);
-			if (it == index.end()){
+			if (it == index.end()){ //If word not already in index create a new list of documents for it
 				index[s] = vector<tuple<int, int, int>>(docn, make_tuple(0, rank, 0));
 				for (int i=0; i<docn; ++i){
-					get<2>(index[s][i]) = i;
+					get<2>(index[s][i]) = i; 
 				}
 				get<0>(index[s][doc_i]) = 1;
 			}
-			else ++(get<0>(index[s][doc_i]));
+			else ++(get<0>(index[s][doc_i])); //Increment wordcount in document list if word already exists in index
 		}
 		document.close();
 	}
 
 	
 
-	ofstream out("index");
+	ofstream out("index"); //Write index persistently
 	for(it = index.begin(); it!=index.end(); ++it){
 		vector<tuple<int, int, int>>& thisvec = it->second;
 		sort(thisvec.rbegin(), thisvec.rend());
