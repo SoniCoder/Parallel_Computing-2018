@@ -31,7 +31,7 @@ Number of primes below 2147483647 is 105097564 : Done in 397.483081s
 p = 4
 
 The n is 100000.
-Number of primes below 100000 is 9592 : Done in   0.002529s 
+Number of primes below 100000 is 9592 : Done in   0.002029s 
 The n is 1000000.
 Number of primes below 1000000 is 78498 : Done in   0.024322s 
 The n is 10000000.
@@ -69,6 +69,8 @@ Number of primes below 10000000 is 664579 : Done in   1.455201s
 The n is 100000000.
 Number of primes below 100000000 is 5761455 : Done in  32.145230s
 The n is 1000000000.
-Number of primes below 1000000000 is 50847534 : Done in 745.873284s 
+Number of primes below 1000000000 is 50847534 : Done in 745.873284s
+The n is 2147483647.
+Number of primes below 2147483647 is 105097564 : Done in 1896.436634s
 
 
